@@ -7,11 +7,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Promeater',
       theme: new ThemeData(
         primarySwatch: Colors.lightGreen,
       ),
-      home: new MyHomePage(title: 'Flutter Demo Home Page'),
+      home: new MyHomePage(title: 'Promeater'),
     );
   }
 }
@@ -40,18 +40,15 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: new AppBar(
         title: new Text(widget.title),
       ),
-      body: Center(
-        child: GridView.count(
-          primary: false,
-          padding: const EdgeInsets.all(20.0),
-          crossAxisSpacing: 10.0,
-          crossAxisCount: 2,
+      body: Padding(
+        padding: const EdgeInsets.all(0.0),
+        child: ListView(
           children: <Widget>[
-            ProteinBar('Red Meat', Colors.red),
-            ProteinBar('Poultry', Colors.yellow),
-            ProteinBar('Seafood', Colors.blue),
-            ProteinBar('Vegetarian', Colors.lightGreen),
-            ProteinBar('Vegan', Colors.green),
+            ProteinBar('Red Meat', Colors.red, 0.2),
+            ProteinBar('Poultry', Colors.yellow, 0.4),
+            ProteinBar('Seafood', Colors.blue, 0.8),
+            ProteinBar('Vegetarian', Colors.lightGreen, 0.7),
+            ProteinBar('Vegan', Colors.green, 0.5),
           ],
         ),
       ),
