@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:promeater/screens/protein_bar.dart';
+import 'package:promeater/models/protein.dart';
 
 void main() => runApp(new MyApp());
 
@@ -26,14 +27,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -44,19 +37,14 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(0.0),
         child: ListView(
           children: <Widget>[
-            ProteinBar('Red Meat', Colors.red, 0.2),
-            ProteinBar('Poultry', Colors.yellow, 0.4),
-            ProteinBar('Seafood', Colors.blue, 0.8),
-            ProteinBar('Vegetarian', Colors.lightGreen, 0.7),
-            ProteinBar('Vegan', Colors.green, 0.5),
+            ProteinBar(Colors.red, Protein('Read Meat', 1, 2)),
+            ProteinBar(Colors.orange, Protein('Poultry', 2, 5)),
+            ProteinBar(Colors.blue, Protein('Seafood', 3, 7)),
+            ProteinBar(Colors.yellow, Protein('Vegetarian', 5, 6)),
+            ProteinBar(Colors.lightGreen, Protein('Vegan', 4, 12)),
           ],
         ),
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

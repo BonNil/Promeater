@@ -1,67 +1,77 @@
 import 'package:flutter/material.dart';
+import 'package:promeater/models/protein.dart';
 
 class ProteinBar extends StatefulWidget {
   final Color barColor;
-  final String title;
-  final double value;
+  final Protein protein;
 
-  ProteinBar(this.title, this.barColor, this.value);
+  ProteinBar(this.barColor, this.protein);
 
   @override
   State<StatefulWidget> createState() {
-    return _ProteinBarState(barColor, title, value);
+    return _ProteinBarState(barColor, protein);
   }
 }
 
 class _ProteinBarState extends State {
   Color barColor;
-  String title;
-  double value;
+  Protein protein;
 
-  _ProteinBarState(this.barColor, this.title, this.value);
+  _ProteinBarState(this.barColor, this.protein);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: 20.0, top: 20.0),
-            child: Text(
-              title,
-              textAlign: TextAlign.start,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26.0),
-            ),
+            padding: EdgeInsets.only(left: 20.0, top: 20.0, right:20.0),
+            child: Row(children: <Widget>[
+              Text(
+                protein.title,
+                textAlign: TextAlign.start,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+              ),
+              Expanded(
+                child: Text(
+                  "${protein.current} out of ${protein.maximum}",
+                  textAlign: TextAlign.end,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                ),
+              ),
+            ]),
           ),
           Container(
             height: 60.0,
             padding: EdgeInsets.only(
                 top: 10.0, left: 10.0, right: 10.0, bottom: 20.0),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                IconButton(
-                  alignment: Alignment.center,
-                  icon: Icon(
-                    Icons.remove_circle_outline,
+                Container(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.remove,
+                    ),
+                    onPressed: remove,
                   ),
-                  onPressed: remove,
                 ),
                 Expanded(
-                  child: Center(
+                  child: Container(
+                    alignment: Alignment.center,
                     child: LinearProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(barColor),
-                      value: this.value,
+                      value: this.protein.decimalPercentage,
                       backgroundColor: Color.fromRGBO(0, 0, 0, 0.10),
                     ),
                   ),
                 ),
-                IconButton(
-                  alignment: Alignment.center,
-                  icon: Icon(
-                    Icons.add_circle_outline,
+                Container(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.add,
+                    ),
+                    onPressed: add,
                   ),
-                  onPressed: add,
                 ),
               ],
             ),
@@ -71,16 +81,16 @@ class _ProteinBarState extends State {
 
   void add() {
     setState(() {
-      if (this.value <= 0.9){
-        this.value += 0.1;
+      if (this.protein.current < this.protein.maximum) {
+        this.protein.current++;
       }
     });
   }
 
   void remove() {
     setState(() {
-      if (this.value >= 0.1){
-        this.value -= 0.1;        
+      if (this.protein.current > 0) {
+        this.protein.current--;
       }
     });
   }
