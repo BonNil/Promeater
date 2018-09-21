@@ -13,11 +13,34 @@ class ProteinBar extends StatefulWidget {
   }
 }
 
-class _ProteinBarState extends State {
+class _ProteinBarState extends State with SingleTickerProviderStateMixin {
+  Animation<double> animation;
+  AnimationController controller;
+
   Color barColor;
   Protein protein;
+  double value;
 
   _ProteinBarState(this.barColor, this.protein);
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
+    );
+    animation = CurvedAnimation(
+      parent: controller,
+      curve: Curves.easeInOut,
+    );
+      animation.addListener(() {
+      setState(() {
+        value = protein.decimalPercentage * animation.value;
+      });
+    });
+    controller.forward();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +83,7 @@ class _ProteinBarState extends State {
                     alignment: Alignment.center,
                     child: LinearProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(barColor),
-                      value: this.protein.decimalPercentage,
+                      value: value,
                       backgroundColor: Color.fromRGBO(0, 0, 0, 0.10),
                     ),
                   ),
@@ -83,6 +106,7 @@ class _ProteinBarState extends State {
     setState(() {
       if (this.protein.current < this.protein.maximum) {
         this.protein.current++;
+        value = this.protein.decimalPercentage;
       }
     });
   }
@@ -91,6 +115,7 @@ class _ProteinBarState extends State {
     setState(() {
       if (this.protein.current > 0) {
         this.protein.current--;
+        value = this.protein.decimalPercentage;
       }
     });
   }

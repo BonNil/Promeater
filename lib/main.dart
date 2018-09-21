@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ListView(
           children: <Widget>[
             ProteinBar(Colors.red, Protein('Read Meat', 1, 2)),
-            ProteinBar(Colors.orange, Protein('Poultry', 2, 5)),
+            ProteinBar(Colors.orange, Protein('Poultry', 4, 5)),
             ProteinBar(Colors.blue, Protein('Seafood', 3, 7)),
             ProteinBar(Colors.yellow, Protein('Vegetarian', 5, 6)),
             ProteinBar(Colors.lightGreen, Protein('Vegan', 4, 12)),
