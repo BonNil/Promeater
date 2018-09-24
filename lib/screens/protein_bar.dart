@@ -13,9 +13,13 @@ class ProteinBar extends StatefulWidget {
   }
 }
 
-class _ProteinBarState extends State with SingleTickerProviderStateMixin {
-  Animation<double> animation;
-  AnimationController controller;
+class _ProteinBarState extends State with TickerProviderStateMixin {
+  Animation<double> initAnimation;
+  AnimationController initAnimController;
+  Animation<double> increaseAnimation;
+  AnimationController increaseAnimController;
+  Animation<double> decreaseAnimation;
+  AnimationController decreaseAnimController;
 
   Color barColor;
   Protein protein;
@@ -26,20 +30,54 @@ class _ProteinBarState extends State with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(
+    initAnimController = AnimationController(
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
-    animation = CurvedAnimation(
-      parent: controller,
+    initAnimation = CurvedAnimation(
+      parent: initAnimController,
       curve: Curves.easeInOut,
     );
-    animation.addListener(() {
+    initAnimation.addListener(() {
       setState(() {
-        barValue = protein.decimalPercentage * animation.value;
+        barValue = protein.decimalPercentage * initAnimation.value;
       });
     });
-    controller.forward();
+    initAnimController.forward();
+
+    increaseAnimController = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
+    increaseAnimation = CurvedAnimation(
+      parent: increaseAnimController,
+      curve: Curves.easeOut,
+    );
+    increaseAnimation.addListener(() {
+      setState(() {
+        barValue = barValue +
+            (increaseAnimation.value * (protein.decimalPercentage - barValue));
+        if (barValue == protein.decimalPercentage)
+          increaseAnimController.reset();
+      });
+    });
+
+    decreaseAnimController = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    );
+    decreaseAnimation = CurvedAnimation(
+      parent: decreaseAnimController,
+      curve: Curves.easeOut,
+    );
+    decreaseAnimation.addListener(() {
+      setState(() {
+        barValue = barValue -
+            (decreaseAnimation.value * (barValue - protein.decimalPercentage));
+        if (barValue == protein.decimalPercentage)
+          decreaseAnimController.reset();
+      });
+    });
   }
 
   @override
@@ -74,7 +112,7 @@ class _ProteinBarState extends State with SingleTickerProviderStateMixin {
                 icon: Icon(
                   Icons.remove,
                 ),
-                onPressed: remove,
+                onPressed: decrease,
               ),
             ),
             Expanded(
@@ -92,7 +130,7 @@ class _ProteinBarState extends State with SingleTickerProviderStateMixin {
                 icon: Icon(
                   Icons.add,
                 ),
-                onPressed: add,
+                onPressed: increase,
               ),
             ),
           ],
@@ -101,20 +139,20 @@ class _ProteinBarState extends State with SingleTickerProviderStateMixin {
     ]);
   }
 
-  void add() {
+  void increase() {
     setState(() {
       if (this.protein.current < this.protein.maximum) {
         this.protein.current++;
-        barValue = this.protein.decimalPercentage;
+        increaseAnimController.forward();
       }
     });
   }
 
-  void remove() {
+  void decrease() {
     setState(() {
       if (this.protein.current > 0) {
         this.protein.current--;
-        barValue = this.protein.decimalPercentage;
+        decreaseAnimController.forward();
       }
     });
   }
