@@ -37,47 +37,55 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
     initAnimation = CurvedAnimation(
       parent: initAnimController,
       curve: Curves.easeInOut,
-    );
-    initAnimation.addListener(() {
-      setState(() {
-        barValue = protein.decimalPercentage * initAnimation.value;
+    )..addListener(() {
+        setState(() {
+          barValue = protein.decimalPercentage * initAnimation.value;
+        });
       });
-    });
+
     initAnimController.forward();
 
     increaseAnimController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 250),
       vsync: this,
     );
     increaseAnimation = CurvedAnimation(
       parent: increaseAnimController,
-      curve: Curves.easeOut,
-    );
-    increaseAnimation.addListener(() {
-      setState(() {
-        barValue = barValue +
-            (increaseAnimation.value * (protein.decimalPercentage - barValue));
-        if (barValue == protein.decimalPercentage)
+      curve: Curves.linear,
+    )
+      ..addListener(() {
+        setState(() {
+          barValue = barValue +
+              (increaseAnimation.value *
+                  (protein.decimalPercentage - barValue));
+        });
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
           increaseAnimController.reset();
+        }
       });
-    });
 
     decreaseAnimController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 250),
       vsync: this,
     );
     decreaseAnimation = CurvedAnimation(
       parent: decreaseAnimController,
-      curve: Curves.easeOut,
-    );
-    decreaseAnimation.addListener(() {
-      setState(() {
-        barValue = barValue -
-            (decreaseAnimation.value * (barValue - protein.decimalPercentage));
-        if (barValue == protein.decimalPercentage)
+      curve: Curves.linear,
+    )
+      ..addListener(() {
+        setState(() {
+          barValue = barValue -
+              (decreaseAnimation.value *
+                  (barValue - protein.decimalPercentage));
+        });
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
           decreaseAnimController.reset();
+        }
       });
-    });
   }
 
   @override
@@ -155,5 +163,13 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
         decreaseAnimController.forward();
       }
     });
+  }
+
+  @override
+  dispose() {
+    initAnimController.dispose();
+    decreaseAnimController.dispose();
+    increaseAnimController.dispose();
+    super.dispose();
   }
 }
