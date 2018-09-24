@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(0.0),
         child: ListView(
           children: <Widget>[
-            ProteinBar(Colors.red, Protein('Read Meat', 1, 2)),
+            ProteinBar(Colors.red, Protein('Red Meat', 1, 2)),
             ProteinBar(Colors.orange, Protein('Poultry', 4, 5)),
             ProteinBar(Colors.blue, Protein('Seafood', 3, 7)),
             ProteinBar(Colors.yellow, Protein('Vegetarian', 5, 6)),
