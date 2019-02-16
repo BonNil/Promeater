@@ -1,50 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:promeater/screens/protein_bar.dart';
-import 'package:promeater/models/protein.dart';
+import 'package:promeater/screens/home_screen.dart';
+import 'package:promeater/screens/placeholder_screen.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(App());
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Promeater',
-      theme: new ThemeData(
+      theme: ThemeData(
         primarySwatch: Colors.lightGreen,
       ),
-      home: new MyHomePage(title: 'Promeater'),
+      home: const HomePage(title: 'Promeater'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    HomeScreen(),
+    const PlaceholderScreen(Colors.blue),
+    const PlaceholderScreen(Colors.grey)
+    ];
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.title),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: ListView(
-          children: <Widget>[
-            ProteinBar(Colors.red, Protein('Read Meat', 1, 2)),
-            ProteinBar(Colors.orange, Protein('Poultry', 4, 5)),
-            ProteinBar(Colors.blue, Protein('Seafood', 3, 7)),
-            ProteinBar(Colors.yellow, Protein('Vegetarian', 5, 6)),
-            ProteinBar(Colors.lightGreen, Protein('Vegan', 4, 12)),
-          ],
+      body: _children[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabTapped,
+        currentIndex: _currentIndex,
+        items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          title: Text('Home'),
         ),
-      ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.portrait),
+          title: Text('Profile'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          title: Text('Settings'),
+        ),
+      ]),
     );
   }
+
+  void onTabTapped(int index) {
+   setState(() {
+     _currentIndex = index;
+   });
+ }
 }
