@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fluid_slider/flutter_fluid_slider.dart';
 import 'package:promeater/style_variables.dart';
 
 class ProteinSlider extends StatefulWidget {
@@ -36,7 +35,8 @@ class _ProteinSliderState extends State {
                 textAlign: TextAlign.left,
                 style: StylingVariables.labelStyle,
               ),
-              Row(children: <Widget>[
+              Row(
+                children: <Widget>[
                 Expanded(
                     child: Slider(
                   min: 0,

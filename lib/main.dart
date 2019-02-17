@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:promeater/screens/home_screen.dart';
-import 'package:promeater/screens/placeholder_screen.dart';
 import 'package:promeater/screens/settings_screen.dart';
-import 'package:promeater/style_variables.dart';
 
 void main() => runApp(App());
 
