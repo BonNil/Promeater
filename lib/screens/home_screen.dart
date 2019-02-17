@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.all(0.0),
-        child: ListView(
+        child: Column(
           children: <Widget>[
             ProteinBar(Colors.red, Protein('Red Meat', 1, 2)),
             ProteinBar(Colors.orange, Protein('Poultry', 4, 5)),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:promeater/models/protein.dart';
+import 'package:promeater/style_variables.dart';
 
 class ProteinBar extends StatefulWidget {
   const ProteinBar(this.barColor, this.protein);
@@ -97,26 +98,27 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
           Text(
             protein.title,
             textAlign: TextAlign.start,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+            style: StylingVariables.labelStyle,
           ),
           Expanded(
             child: Text(
               '${protein.current} out of ${protein.maximum}',
               textAlign: TextAlign.end,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+              style: StylingVariables.smallLabelStyle,
             ),
           ),
         ]),
       ),
       Container(
         height: 60.0,
-        padding:
-            const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0, bottom: 20.0),
+        padding: const EdgeInsets.only(
+            top: 10.0, left: 10.0, right: 10.0, bottom: 20.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             Container(
               child: IconButton(
+                iconSize: 40.0,
                 icon: const Icon(
                   Icons.remove,
                 ),
@@ -125,19 +127,18 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
             ),
             Expanded(
               child: Container(
-                alignment: Alignment.center,
+                alignment: Alignment.bottomCenter,
                 child: LinearProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(barColor),
                   value: barValue,
-                  backgroundColor: const Color.fromRGBO(0, 0, 0, 0.10),
+                  backgroundColor: StylingVariables.lightgreyBgColor,
                 ),
               ),
             ),
             Container(
               child: IconButton(
-                icon: const Icon(
-                  Icons.add,
-                ),
+                iconSize: 40.0,
+                icon: const Icon(Icons.add),
                 onPressed: increase,
               ),
             ),

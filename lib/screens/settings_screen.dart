@@ -7,31 +7,14 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: <Widget>[
-          Row(children: const <Widget>[
-            Text('Red Meat'),
-            ProteinSlider(0, Colors.red)
-          ]),
-          Row(children: const <Widget>[
-            Text('Poultry'),
-            ProteinSlider(0, Colors.orange)
-          ]),
-          Row(children: const <Widget>[
-            Text('Seafood'),
-            ProteinSlider(0, Colors.blue)
-          ]),
-          Row(children: const <Widget>[
-            Text('Vegetarian'),
-            ProteinSlider(0, Colors.yellow)
-          ]),
-          Row(children: const <Widget>[
-            Text('Vegan'),
-            ProteinSlider(0, Colors.green)
-          ]),
-        ],
-      ),
+      padding: const EdgeInsets.all(0.0),
+      child: Column(children: const <Widget>[
+        ProteinSlider(0, 'Red Meat', Colors.red),
+        ProteinSlider(0, 'Poultry', Colors.orange),
+        ProteinSlider(0, 'Seafood', Colors.blue),
+        ProteinSlider(0, 'Vegetarian', Colors.yellow),
+        ProteinSlider(0, 'Vegan', Colors.green)
+      ]),
     );
   }
 }
