@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:promeater/screens/home_screen.dart';
 import 'package:promeater/screens/placeholder_screen.dart';
+import 'package:promeater/screens/settings_screen.dart';
 
 void main() => runApp(App());
 
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _children = [
     HomeScreen(),
     const PlaceholderScreen(Colors.blue),
-    const PlaceholderScreen(Colors.grey)
+    const SettingsScreen()
     ];
   @override
   Widget build(BuildContext context) {

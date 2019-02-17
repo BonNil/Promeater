@@ -31,7 +31,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
   void initState() {
     super.initState();
     initAnimController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
     initAnimation = CurvedAnimation(
