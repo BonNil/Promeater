@@ -3,19 +3,18 @@ import 'package:promeater/models/protein.dart';
 import 'package:promeater/style_variables.dart';
 
 class ProteinBar extends StatefulWidget {
-  const ProteinBar(this.barColor, this.protein);
+  const ProteinBar(this.protein);
 
-  final Color barColor;
   final Protein protein;
 
   @override
   State<StatefulWidget> createState() {
-    return _ProteinBarState(barColor, protein);
+    return _ProteinBarState(protein);
   }
 }
 
 class _ProteinBarState extends State with TickerProviderStateMixin {
-  _ProteinBarState(this.barColor, this.protein);
+  _ProteinBarState(this.protein);
 
   Animation<double> initAnimation;
   AnimationController initAnimController;
@@ -24,7 +23,6 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
   Animation<double> decreaseAnimation;
   AnimationController decreaseAnimController;
 
-  Color barColor;
   Protein protein;
   double barValue;
 
@@ -129,7 +127,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
               child: Container(
                 alignment: Alignment.bottomCenter,
                 child: LinearProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(barColor),
+                  valueColor: AlwaysStoppedAnimation<Color>(protein.color),
                   value: barValue,
                   backgroundColor: StylingVariables.lightgreyBgColor,
                 ),
