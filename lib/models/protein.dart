@@ -38,6 +38,8 @@ class Protein {
   set maximum(int newMax) {
     if (newMax > 20) {
       _maximum = 20;
+    } else {
+      _maximum = newMax;
     }
   }
 

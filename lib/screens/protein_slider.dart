@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:promeater/style_variables.dart';
+import 'package:promeater/models/protein.dart';
+import 'package:promeater/utils/proteinProvider.dart';
 
 class ProteinSlider extends StatefulWidget {
-  const ProteinSlider(this._initialValue, this._label, this._color);
+  ProteinSlider(this._protein);
 
-  final int _initialValue;
-  final String _label;
-  final Color _color;
+  Protein _protein;
 
   @override
   State<StatefulWidget> createState() {
-    return _ProteinSliderState(_initialValue, _label, _color);
+    return _ProteinSliderState(_protein);
   }
 }
 
 class _ProteinSliderState extends State {
-  _ProteinSliderState(this._currentValue, this._label, this._color);
+  _ProteinSliderState(this._protein) {
+    _maximum = _protein.maximum;
+  }
 
-  int _currentValue;
-  String _label;
-  Color _color;
+  final ProteinProvider _provider = ProteinProvider();
+  Protein _protein;
+  int _maximum;
 
   @override
   Widget build(BuildContext context) {
+    _provider.initializeDb();
+
     return Padding(
         padding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
         child: Container(
@@ -31,7 +35,7 @@ class _ProteinSliderState extends State {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
               Text(
-                _label,
+                _protein.title,
                 textAlign: TextAlign.left,
                 style: StylingVariables.labelStyle,
               ),
@@ -41,23 +45,31 @@ class _ProteinSliderState extends State {
                     child: Slider(
                   min: 0,
                   max: 20,
-                  value: _currentValue.toDouble(),
+                  value: _maximum.toDouble(),
                   onChanged: (double newValue) => setValue(newValue),
-                  label: '$_currentValue',
-                  activeColor: _color,
+                  label: '$_maximum',
+                  activeColor: _protein.color,
                   inactiveColor: StylingVariables.lightgreyBgColor,
                 )),
-                _currentValue != 20 ? Text(
-                  _currentValue.toString(),
+                _maximum != 20 ? Text(
+                  _maximum.toString(),
                   style: StylingVariables.smallLabelStyle,
                 ) : const Icon(Icons.all_inclusive),
               ])
             ])));
   }
 
+  @override
+  void dispose() {
+    _protein.maximum = _maximum;
+    _provider.updateProtein(_protein);
+
+    super.dispose();
+  }
+
   void setValue(double newValue) {
     setState(() {
-      _currentValue = newValue.toInt();
+      _maximum = newValue.toInt();
     });
   }
 }

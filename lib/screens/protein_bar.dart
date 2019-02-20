@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:promeater/models/protein.dart';
+import 'package:promeater/utils/proteinProvider.dart';
 import 'package:promeater/style_variables.dart';
 
 class ProteinBar extends StatefulWidget {
@@ -23,6 +24,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
   Animation<double> decreaseAnimation;
   AnimationController decreaseAnimController;
 
+  final ProteinProvider provider = ProteinProvider();
   Protein protein;
   double barValue;
 
@@ -89,6 +91,8 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    provider.initializeDb();
+
     return Column(children: <Widget>[
       Padding(
         padding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
@@ -166,9 +170,12 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    provider.updateProtein(protein);
+
     initAnimController.dispose();
     decreaseAnimController.dispose();
     increaseAnimController.dispose();
+
     super.dispose();
   }
 }
