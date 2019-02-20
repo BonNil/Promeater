@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:promeater/screens/protein_bar.dart';
+import 'package:promeater/screens/protein_slider.dart';
 import 'package:promeater/models/protein.dart';
 import 'package:promeater/utils/proteinProvider.dart';
 
-class HomeScreen extends StatefulWidget {
+class SettingsScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _HomeScreenState();
+  State<StatefulWidget> createState() => _SettingsScreenState();
 }
 
-class _HomeScreenState extends State {
+class _SettingsScreenState extends State {
   ProteinProvider provider = ProteinProvider();
   List<Protein> _proteins;
 
@@ -22,7 +22,7 @@ class _HomeScreenState extends State {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Column(
-        children: _proteins.map((protein) => ProteinBar(protein)).toList(),
+        children:_proteins.map((protein) => ProteinSlider(protein)).toList(),
       ),
     );
   }
@@ -39,3 +39,4 @@ class _HomeScreenState extends State {
     });
   }
 }
+

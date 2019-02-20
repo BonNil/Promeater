@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:promeater/screens/home_screen.dart';
-import 'package:promeater/screens/placeholder_screen.dart';
+import 'package:promeater/screens/settings_screen.dart';
 
 void main() => runApp(App());
 
@@ -9,9 +9,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Promeater',
-      theme: ThemeData(
-        primarySwatch: Colors.lightGreen,
-      ),
+      theme: ThemeData(primarySwatch: Colors.green),
       home: const HomePage(title: 'Promeater'),
     );
   }
@@ -28,11 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    HomeScreen(),
-    const PlaceholderScreen(Colors.blue),
-    const PlaceholderScreen(Colors.grey)
-    ];
+  final List<Widget> _children = [HomeScreen(), SettingsScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,28 +35,24 @@ class _HomePageState extends State<HomePage> {
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        onTap: onTabTapped,
-        currentIndex: _currentIndex,
-        items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          title: Text('Home'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.portrait),
-          title: Text('Profile'),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          title: Text('Settings'),
-        ),
-      ]),
+          onTap: onTabTapped,
+          currentIndex: _currentIndex,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              title: Text('Home'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              title: Text('Settings'),
+            ),
+          ]),
     );
   }
 
   void onTabTapped(int index) {
-   setState(() {
-     _currentIndex = index;
-   });
- }
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 }
