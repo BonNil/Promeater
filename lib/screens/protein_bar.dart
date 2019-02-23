@@ -4,18 +4,18 @@ import 'package:promeater/utils/proteinProvider.dart';
 import 'package:promeater/style_variables.dart';
 
 class ProteinBar extends StatefulWidget {
-  const ProteinBar(this.protein);
+  const ProteinBar(this._protein);
 
-  final Protein protein;
+  final Protein _protein;
 
   @override
   State<StatefulWidget> createState() {
-    return _ProteinBarState(protein);
+    return _ProteinBarState(_protein);
   }
 }
 
 class _ProteinBarState extends State with TickerProviderStateMixin {
-  _ProteinBarState(this.protein);
+  _ProteinBarState(this._protein);
 
   Animation<double> initAnimation;
   AnimationController initAnimController;
@@ -25,7 +25,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
   AnimationController decreaseAnimController;
 
   final ProteinProvider provider = ProteinProvider();
-  Protein protein;
+  Protein _protein;
   double barValue;
 
   @override
@@ -40,7 +40,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
       curve: Curves.easeInOut,
     )..addListener(() {
         setState(() {
-          barValue = protein.decimalPercentage * initAnimation.value;
+          barValue = _protein.decimalPercentage * initAnimation.value;
         });
       });
 
@@ -58,7 +58,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
         setState(() {
           barValue = barValue +
               (increaseAnimation.value *
-                  (protein.decimalPercentage - barValue));
+                  (_protein.decimalPercentage - barValue));
         });
       })
       ..addStatusListener((status) {
@@ -79,7 +79,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
         setState(() {
           barValue = barValue -
               (decreaseAnimation.value *
-                  (barValue - protein.decimalPercentage));
+                  (barValue - _protein.decimalPercentage));
         });
       })
       ..addStatusListener((status) {
@@ -92,19 +92,20 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     provider.initializeDb();
+    provider.updateProtein(_protein);
 
     return Column(children: <Widget>[
       Padding(
         padding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
         child: Row(children: <Widget>[
           Text(
-            protein.title,
+            _protein.title,
             textAlign: TextAlign.start,
             style: StylingVariables.labelStyle,
           ),
           Expanded(
             child: Text(
-              '${protein.current} out of ${protein.maximum}',
+              '${_protein.current} out of ${_protein.maximum}',
               textAlign: TextAlign.end,
               style: StylingVariables.smallLabelStyle,
             ),
@@ -131,7 +132,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
               child: Container(
                 alignment: Alignment.bottomCenter,
                 child: LinearProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(protein.color),
+                  valueColor: AlwaysStoppedAnimation<Color>(_protein.color),
                   value: barValue,
                   backgroundColor: StylingVariables.lightgreyBgColor,
                 ),
@@ -152,8 +153,8 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
 
   void increase() {
     setState(() {
-      if (protein.current < protein.maximum) {
-        protein.current++;
+      if (_protein.current < _protein.maximum) {
+        _protein.current++;
         increaseAnimController.forward();
       }
     });
@@ -161,8 +162,8 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
 
   void decrease() {
     setState(() {
-      if (protein.current > 0) {
-        protein.current--;
+      if (_protein.current > 0) {
+        _protein.current--;
         decreaseAnimController.forward();
       }
     });
@@ -170,8 +171,6 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    provider.updateProtein(protein);
-
     initAnimController.dispose();
     decreaseAnimController.dispose();
     increaseAnimController.dispose();
