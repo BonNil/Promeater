@@ -91,7 +91,6 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    provider.initializeDb();
     provider.updateProtein(_protein);
 
     return Column(children: <Widget>[

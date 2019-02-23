@@ -22,7 +22,6 @@ class _ProteinSliderState extends State {
 
   @override
   Widget build(BuildContext context) {
-    _provider.initializeDb();
     _provider.updateProtein(_protein);
 
     return Padding(
