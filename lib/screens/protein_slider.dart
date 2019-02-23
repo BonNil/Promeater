@@ -4,9 +4,9 @@ import 'package:promeater/models/protein.dart';
 import 'package:promeater/utils/proteinProvider.dart';
 
 class ProteinSlider extends StatefulWidget {
-  ProteinSlider(this._protein);
+  const ProteinSlider(this._protein);
 
-  Protein _protein;
+  final Protein _protein;
 
   @override
   State<StatefulWidget> createState() {
@@ -15,17 +15,14 @@ class ProteinSlider extends StatefulWidget {
 }
 
 class _ProteinSliderState extends State {
-  _ProteinSliderState(this._protein) {
-    _maximum = _protein.maximum;
-  }
+  _ProteinSliderState(this._protein);
 
   final ProteinProvider _provider = ProteinProvider();
   Protein _protein;
-  int _maximum;
 
   @override
   Widget build(BuildContext context) {
-    _provider.initializeDb();
+    _provider.updateProtein(_protein);
 
     return Padding(
         padding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
@@ -39,37 +36,30 @@ class _ProteinSliderState extends State {
                 textAlign: TextAlign.left,
                 style: StylingVariables.labelStyle,
               ),
-              Row(
-                children: <Widget>[
+              Row(children: <Widget>[
                 Expanded(
                     child: Slider(
                   min: 0,
                   max: 20,
-                  value: _maximum.toDouble(),
+                  value: _protein.maximum.toDouble(),
                   onChanged: (double newValue) => setValue(newValue),
-                  label: '$_maximum',
+                  label: '${_protein.maximum}',
                   activeColor: _protein.color,
                   inactiveColor: StylingVariables.lightgreyBgColor,
                 )),
-                _maximum != 20 ? Text(
-                  _maximum.toString(),
-                  style: StylingVariables.smallLabelStyle,
-                ) : const Icon(Icons.all_inclusive),
+                _protein.maximum != 20
+                    ? Text(
+                        _protein.maximum.toString(),
+                        style: StylingVariables.smallLabelStyle,
+                      )
+                    : const Icon(Icons.all_inclusive),
               ])
             ])));
   }
 
-  @override
-  void dispose() {
-    _protein.maximum = _maximum;
-    _provider.updateProtein(_protein);
-
-    super.dispose();
-  }
-
   void setValue(double newValue) {
     setState(() {
-      _maximum = newValue.toInt();
+      _protein.maximum = newValue.toInt();
     });
   }
 }

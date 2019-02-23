@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:sqflite/sqflite.dart';
-import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:promeater/models/protein.dart';
-import 'package:promeater/style_variables.dart';
+import 'package:promeater/utils/dbCreator.dart';
 
 class ProteinProvider {
   factory ProteinProvider() {
@@ -14,39 +11,19 @@ class ProteinProvider {
   ProteinProvider._internal();
   static final ProteinProvider _dbHelper = ProteinProvider._internal();
 
-  String tblProtein = 'protein';
-  String colId = 'id';
-  String colTitle = 'title';
-  String colCurrent = 'current';
-  String colMaximum = 'maximum';
-  String colColor = 'color';
-  String colShow = 'show';
+  static String tblProtein = 'protein';
+  static String colId = 'id';
+  static String colTitle = 'title';
+  static String colCurrent = 'current';
+  static String colMaximum = 'maximum';
+  static String colColor = 'color';
+  static String colShow = 'show';
 
   static Database _db;
 
   Future<Database> get db async {
-    _db ??= await initializeDb();
+    _db ??= await DbCreator.initializeDb();
     return _db;
-  }
-
-  Future<Database> initializeDb() async {
-    final Directory dir = await getApplicationDocumentsDirectory();
-    final String path = dir.path + 'promeater.db';
-
-    final dbProteins =
-        await openDatabase(path, version: 1, onCreate: _createDb);
-    return dbProteins;
-  }
-
-  void _createDb(Database db, int newVersion) {
-    db.execute(
-        'CREATE TABLE $tblProtein($colId INTEGER PRIMARY KEY, $colTitle TEXT, $colCurrent INTEGER, $colMaximum INTEGER, $colColor INTEGER, $colShow INTEGER)');
-
-    db.insert(tblProtein, Protein(StylingVariables.redMeatColor, 'Red Meat', 0, 1).toMap());
-    db.insert(tblProtein, Protein(StylingVariables.poultryColor, 'Poultry', 0, 1).toMap());
-    db.insert(tblProtein, Protein(StylingVariables.seafoodColor, 'Seafood', 0, 1).toMap());
-    db.insert(tblProtein, Protein(StylingVariables.vegetarianColor, 'Vegetarian', 0, 1).toMap());
-    db.insert(tblProtein, Protein(StylingVariables.veganColor, 'Vegan', 0, 1).toMap());
   }
 
   Future<int> insertProtein(Protein protein) async {
@@ -55,7 +32,7 @@ class ProteinProvider {
     return result;
   }
 
-  Future<List> getProteins() async {
+  Future<List<Protein>> getProteins() async {
     final List<Protein> proteins = <Protein>[];
     final Database db = await this.db;
     final result =
