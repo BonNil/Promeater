@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
-import 'package:promeater/models/AppStatus.dart';
-import 'package:promeater/utils/dbCreator.dart';
+import 'package:promeater/models/app_status.dart';
+import 'package:promeater/utils/db_initializer.dart';
 
 class AppStatusProvider {
   factory AppStatusProvider() {
@@ -18,7 +18,7 @@ class AppStatusProvider {
   static Database _db;
 
   Future<Database> get db async {
-    _db ??= await DbCreator.initializeDb();
+    _db ??= await DatabaseInitializer.initializeDb();
     return _db;
   }
 

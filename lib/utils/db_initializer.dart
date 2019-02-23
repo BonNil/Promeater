@@ -2,13 +2,13 @@ import 'dart:async';
 import 'dart:io';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:promeater/utils/proteinProvider.dart';
-import 'package:promeater/utils/appStatusProvider.dart';
+import 'package:promeater/utils/protein_provider.dart';
+import 'package:promeater/utils/app_status_provider.dart';
 import 'package:promeater/models/protein.dart';
 import 'package:promeater/style_variables.dart';
-import 'package:promeater/utils/dateHelper.dart';
+import 'package:promeater/utils/date_helper.dart';
 
-class DbCreator {
+class DatabaseInitializer {
   static final String _createAppStatusTblQuery =
       'CREATE TABLE IF NOT EXISTS ${AppStatusProvider.tblStatus}(${AppStatusProvider.colId} ' +
           'INTEGER PRIMARY KEY, ${AppStatusProvider.colResetWeek} INTEGER)';
@@ -24,7 +24,7 @@ class DbCreator {
     final String path = dir.path + 'promeater.db';
 
     final db =
-        await openDatabase(path, version: 1, onCreate: DbCreator.createDb);
+        await openDatabase(path, version: 1, onCreate: DatabaseInitializer.createDb);
     await _ensureTablesAndInitialValues(db);
 
     return db;

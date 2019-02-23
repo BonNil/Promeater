@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:promeater/models/protein.dart';
-import 'package:promeater/utils/dbCreator.dart';
+import 'package:promeater/utils/db_initializer.dart';
 
 class ProteinProvider {
   factory ProteinProvider() {
@@ -22,7 +22,7 @@ class ProteinProvider {
   static Database _db;
 
   Future<Database> get db async {
-    _db ??= await DbCreator.initializeDb();
+    _db ??= await DatabaseInitializer.initializeDb();
     return _db;
   }
 
