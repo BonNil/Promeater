@@ -5,18 +5,36 @@ import 'package:promeater/utils/app_status_provider.dart';
 import 'package:promeater/utils/protein_provider.dart';
 import 'package:promeater/utils/date_helper.dart';
 
-void main() => runApp(App());
+void main() async {
+  await weeklyReset();
+  runApp(App());
+}
+
+Future<void> weeklyReset() async {
+  final statusProvider = AppStatusProvider();
+  final appStatusFuture = statusProvider.getAppStatus();
+  final currentWeek = weekNumber(DateTime.now());
+  final appStatus = await appStatusFuture;
+  if (appStatus.lastResetWeek != currentWeek) {
+    await resetAllProteins();
+    appStatus.lastResetWeek = currentWeek;
+    statusProvider.updateAppStatus(appStatus);
+  }
+}
+
+Future<void> resetAllProteins() async {
+  final proteinProvider = ProteinProvider();
+  final proteins = await proteinProvider.getProteins();
+  for (int i = 0; i < proteins.length; i++) {
+    final protein = proteins[i];
+    protein.current = 0;
+    await proteinProvider.updateProtein(protein);
+  }
+}
 
 class App extends StatelessWidget {
   final statusProvider = AppStatusProvider();
   final proteinProvider = ProteinProvider();
-
-  @override
-  StatelessElement createElement() {
-    weeklyReset();
-
-    return super.createElement();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,28 +43,6 @@ class App extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.green),
       home: const HomePage(title: 'Promeater'),
     );
-  }
-
-  void weeklyReset() {
-    final appStatusFuture = statusProvider.getAppStatus();
-    final currentWeek = weekNumber(DateTime.now());
-    appStatusFuture.then((appStatus) {
-      if (appStatus.lastResetWeek != currentWeek) {
-        resetAllProteins();
-        appStatus.lastResetWeek = currentWeek;
-        statusProvider.updateAppStatus(appStatus);
-      }
-    });
-  }
-
-  void resetAllProteins() {
-    final proteinsFuture = proteinProvider.getProteins();
-    proteinsFuture.then((proteins) {
-      for (int i; i < proteins.length; i++) {
-        proteins[i].current = 0;
-        proteinProvider.updateProtein(proteins[i]);
-      }
-    });
   }
 }
 
