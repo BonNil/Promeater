@@ -44,7 +44,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.green,
           textTheme: TextTheme(
-              body1: TextStyle(color: StylingVariables.darkBlueSlate))),
+              body1: TextStyle(color: Colors.grey[700]))),
       home: const HomePage(title: 'Promeater'),
     );
   }

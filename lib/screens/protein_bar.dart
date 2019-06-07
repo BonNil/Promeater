@@ -123,7 +123,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
                       iconSize: 40.0,
                       icon: const Icon(
                         Icons.remove,
-                        color: Colors.blueGrey,
+                        color: Colors.black54,
                       ),
                       onPressed: decrease,
                     ),
@@ -142,7 +142,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
                   Container(
                     child: IconButton(
                       iconSize: 40.0,
-                      icon: const Icon(Icons.add, color: Colors.blueGrey,),
+                      icon: const Icon(Icons.add, color: Colors.black54,),
                       onPressed: increase,
                     ),
                   ),
