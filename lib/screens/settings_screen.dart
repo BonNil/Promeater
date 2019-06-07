@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:promeater/screens/protein_slider.dart';
 import 'package:promeater/models/protein.dart';
 import 'package:promeater/utils/protein_provider.dart';
+import 'package:flutter/services.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -14,15 +15,20 @@ class _SettingsScreenState extends State {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     if (_proteins == null) {
       _proteins = <Protein>[];
       loadProteinData();
     }
 
     return Padding(
-      padding: const EdgeInsets.all(0.0),
+      padding: const EdgeInsets.only(left: 20.0, top: 0.0, right: 20.0, bottom: 10.0),
       child: Column(
-        children:_proteins.map((protein) => ProteinSlider(protein)).toList(),
+        children: _proteins.map((protein) => ProteinSlider(protein)).toList(),
       ),
     );
   }
