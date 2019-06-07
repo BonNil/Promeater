@@ -93,7 +93,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     provider.updateProtein(_protein);
 
-    return Column(children: <Widget>[
+    return _protein.maximum > 0 ? Column(children: <Widget>[
       Padding(
         padding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
         child: Row(children: <Widget>[
@@ -145,7 +145,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
           ],
         ),
       ),
-    ]);
+    ]) : Container();
   }
 
   void increase() {
