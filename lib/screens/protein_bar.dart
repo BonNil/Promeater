@@ -93,59 +93,64 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     provider.updateProtein(_protein);
 
-    return _protein.maximum > 0 ? Column(children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
-        child: Row(children: <Widget>[
-          Text(
-            _protein.title,
-            textAlign: TextAlign.start,
-            style: StylingVariables.labelStyle,
-          ),
-          Expanded(
-            child: Text(
-              '${_protein.current} out of ${_protein.maximum}',
-              textAlign: TextAlign.end,
-              style: StylingVariables.smallLabelStyle,
-            ),
-          ),
-        ]),
-      ),
-      Container(
-        height: 60.0,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            Container(
-              child: IconButton(
-                iconSize: 40.0,
-                icon: const Icon(
-                  Icons.remove,
+    return _protein.maximum > 0
+        ? Column(children: <Widget>[
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
+              child: Row(children: <Widget>[
+                Text(
+                  _protein.title,
+                  textAlign: TextAlign.start,
+                  style: StylingVariables.labelStyle,
                 ),
-                onPressed: decrease,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.center,
-                child: LinearProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(_protein.color),
-                  value: barValue,
-                  backgroundColor: StylingVariables.lightgreyBgColor,
+                Expanded(
+                  child: Text(
+                    '${_protein.current} out of ${_protein.maximum}',
+                    textAlign: TextAlign.end,
+                    style: StylingVariables.smallLabelStyle,
+                  ),
                 ),
-              ),
+              ]),
             ),
             Container(
-              child: IconButton(
-                iconSize: 40.0,
-                icon: const Icon(Icons.add),
-                onPressed: increase,
+              height: 60.0,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    child: IconButton(
+                      iconSize: 40.0,
+                      icon: const Icon(
+                        Icons.remove,
+                        color: Colors.blueGrey,
+                      ),
+                      onPressed: decrease,
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: LinearProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(_protein.color),
+                        value: barValue,
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: IconButton(
+                      iconSize: 40.0,
+                      icon: const Icon(Icons.add, color: Colors.blueGrey,),
+                      onPressed: increase,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    ]) : Container();
+          ])
+        : Container();
   }
 
   void increase() {

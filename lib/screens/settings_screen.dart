@@ -25,7 +25,7 @@ class _SettingsScreenState extends State {
       loadProteinData();
     }
 
-    return Padding(
+    return Container(
       padding: const EdgeInsets.only(left: 20.0, top: 0.0, right: 20.0, bottom: 10.0),
       child: Column(
         children: _proteins.map((protein) => ProteinSlider(protein)).toList(),

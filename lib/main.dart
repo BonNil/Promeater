@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:promeater/screens/home_screen.dart';
 import 'package:promeater/screens/settings_screen.dart';
+import 'package:promeater/style_variables.dart';
 import 'package:promeater/utils/app_status_provider.dart';
 import 'package:promeater/utils/protein_provider.dart';
 import 'package:promeater/utils/date_helper.dart';
@@ -40,7 +41,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Promeater',
-      theme: ThemeData(primarySwatch: Colors.green),
+      theme: ThemeData(
+          primarySwatch: Colors.green,
+          textTheme: TextTheme(
+              body1: TextStyle(color: StylingVariables.darkBlueSlate))),
       home: const HomePage(title: 'Promeater'),
     );
   }
@@ -64,7 +68,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: _children[_currentIndex],
+      body: Container(
+          child: _children[_currentIndex]),
       bottomNavigationBar: BottomNavigationBar(
           onTap: onTabTapped,
           currentIndex: _currentIndex,

@@ -45,7 +45,7 @@ class _ProteinSliderState extends State {
                   onChanged: (double newValue) => setValue(newValue),
                   label: '${_protein.maximum}',
                   activeColor: _protein.color,
-                  inactiveColor: StylingVariables.lightgreyBgColor,
+                  inactiveColor: Colors.white,
                 )),
                 Text(
                   _protein.maximum.toString(),

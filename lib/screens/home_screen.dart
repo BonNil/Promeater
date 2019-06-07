@@ -25,8 +25,9 @@ class _HomeScreenState extends State {
       loadProteinData();
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 20.0, top: 0.0, right: 20.0, bottom: 10.0),
+    return Container(
+      padding: const EdgeInsets.only(
+          left: 20.0, top: 0.0, right: 20.0, bottom: 10.0),
       child: ListView(
         children: _proteins.map((protein) => ProteinBar(protein)).toList(),
       ),
