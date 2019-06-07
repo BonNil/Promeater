@@ -113,8 +113,6 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
       ),
       Container(
         height: 60.0,
-        padding: const EdgeInsets.only(
-            top: 10.0, left: 10.0, right: 10.0, bottom: 20.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
@@ -129,7 +127,7 @@ class _ProteinBarState extends State with TickerProviderStateMixin {
             ),
             Expanded(
               child: Container(
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.center,
                 child: LinearProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(_protein.color),
                   value: barValue,

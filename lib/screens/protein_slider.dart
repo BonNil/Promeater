@@ -47,12 +47,10 @@ class _ProteinSliderState extends State {
                   activeColor: _protein.color,
                   inactiveColor: StylingVariables.lightgreyBgColor,
                 )),
-                _protein.maximum != 20
-                    ? Text(
-                        _protein.maximum.toString(),
-                        style: StylingVariables.smallLabelStyle,
-                      )
-                    : const Icon(Icons.all_inclusive),
+                Text(
+                  _protein.maximum.toString(),
+                  style: StylingVariables.smallLabelStyle,
+                ),
               ])
             ])));
   }
