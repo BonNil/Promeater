@@ -10,6 +10,7 @@ class StylingVariables {
   static TextStyle get smallLabelStyle => TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0);
 
   static Color get redMeatColor => Colors.red[500];
+  static Color get porkColor => Colors.pink[300];
   static Color get poultryColor => Colors.orange[500];
   static Color get seafoodColor => Colors.blue[500];
   static Color get vegetarianColor => Colors.teal[500];

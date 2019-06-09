@@ -23,8 +23,8 @@ class DatabaseInitializer {
     final Directory dir = await getApplicationDocumentsDirectory();
     final String path = dir.path + 'promeater.db';
 
-    final db =
-        await openDatabase(path, version: 1, onCreate: DatabaseInitializer.createDb);
+    final db = await openDatabase(path,
+        version: 1, onCreate: DatabaseInitializer.createDb);
     await _ensureTablesAndInitialValues(db);
 
     return db;
@@ -53,7 +53,9 @@ class DatabaseInitializer {
 
   static void _createProteins(Database db) {
     db.insert(ProteinProvider.tblProtein,
-        Protein(StylingVariables.redMeatColor, 'Red Meat', 0, 1).toMap());
+        Protein(StylingVariables.redMeatColor, 'Beef', 0, 1).toMap());
+    db.insert(ProteinProvider.tblProtein,
+        Protein(StylingVariables.porkColor, 'Pork', 0, 1).toMap());
     db.insert(ProteinProvider.tblProtein,
         Protein(StylingVariables.poultryColor, 'Poultry', 0, 1).toMap());
     db.insert(ProteinProvider.tblProtein,
