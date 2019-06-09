@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:promeater/screens/protein_slider.dart';
+import 'package:promeater/widgets/protein_slider.dart';
 import 'package:promeater/models/protein.dart';
 import 'package:promeater/utils/protein_provider.dart';
 import 'package:flutter/services.dart';

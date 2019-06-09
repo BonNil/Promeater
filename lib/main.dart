@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:promeater/screens/home_screen.dart';
 import 'package:promeater/screens/settings_screen.dart';
-import 'package:promeater/style_variables.dart';
 import 'package:promeater/utils/app_status_provider.dart';
 import 'package:promeater/utils/protein_provider.dart';
 import 'package:promeater/utils/date_helper.dart';

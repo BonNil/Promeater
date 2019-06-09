@@ -33,6 +33,7 @@ class _ProteinSliderState extends State {
                 children: <Widget>[
               Text(
                 _protein.title,
+                textDirection: TextDirection.ltr,
                 textAlign: TextAlign.left,
                 style: StylingVariables.labelStyle,
               ),
